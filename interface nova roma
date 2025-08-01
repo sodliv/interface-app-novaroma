@@ -1,5 +1,8 @@
 import customtkinter as ctk
 from tkinter import filedialog
+from Bot import processar_planilha
+import os
+
 
 caminho_planilha = None
 
@@ -13,7 +16,7 @@ def login_bundy_rh():
   senha = campo_senha.get()
 
   #verificacao senha
-  if usuario == 'jdomingos@bundyrefrigeration.com' and senha == 'joaobundy':
+  if usuario == 'smlima@bundyrefrigeration.com' and senha == 'solonbundy':
     resultado_login.configure(text='Login feito com sucesso!',
     text_color='orange')
     botao_arquivo.pack(pady=10)  # mostra o botão após login
@@ -31,15 +34,20 @@ def escolher_arquivo():
     if caminho:
         caminho_planilha = caminho
         resultado_login.configure(text='Planilha selecionada com sucesso!', text_color='orange')
-        print("Caminho da planilha:", caminho_planilha)  # aqui você pode usar como quiser no código principal
+        processar_planilha(caminho_planilha)
 
 #dimensoesjanela
 novaroma = ctk.CTk()
 novaroma.title('NovaRoma')
 novaroma.geometry('400x400')
-novaroma.iconbitmap("C:\\Users\\Solon\\OneDrive\\Área de Trabalho\\NovaRoma_Icon-removebg-preview AAAA.ico")
-#campos
 
+# obtém o caminho absoluto da pasta onde está o script atual
+base_dir = os.path.dirname(os.path.abspath(__file__))
+# monta o caminho completo para o arquivo .ico dentro da pasta 'Icone Image'
+icon_path = os.path.join(base_dir, '..', 'Icone Image', 'NovaRoma_Icon.ico')
+icon_path = os.path.abspath(icon_path)  # transforma em caminho absoluto
+
+#campos
 label_usuario = ctk.CTkLabel(novaroma,text='Usuário')
 label_usuario.pack(pady=10)
 
