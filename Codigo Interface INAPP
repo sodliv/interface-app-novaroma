@@ -1,0 +1,70 @@
+import customtkinter as ctk
+from tkinter import filedialog
+from BOTSSCLOUDFINAL import processar_planilha
+
+
+caminho_planilha = None
+
+#aparência
+ctk.set_appearance_mode('dark')
+
+
+#funcionalidades
+def login_bundy_rh():
+  usuario = campo_usuario.get()
+  senha = campo_senha.get()
+
+  #verificacao senha
+  if usuario == 'smlima@bundyrefrigeration.com' and senha == 'solonbundy':
+    resultado_login.configure(text='Login feito com sucesso!',
+    text_color='orange')
+    botao_arquivo.pack(pady=10)  # mostra o botão após login
+  else:
+    resultado_login.configure(text='Login incorreto.',
+    text_color='red')
+
+# função para escolher o arquivo
+def escolher_arquivo():
+    global caminho_planilha
+    caminho = filedialog.askopenfilename(
+        title="Escolha a planilha",
+        filetypes=[("Planilhas Excel", "*.xlsx")]
+    )
+    if caminho:
+        caminho_planilha = caminho
+        resultado_login.configure(text='Planilha selecionada com sucesso!', text_color='orange')
+        processar_planilha(caminho_planilha)
+
+#dimensoesjanela
+novaroma = ctk.CTk()
+novaroma.title('NovaRoma')
+novaroma.geometry('400x400')
+novaroma.iconbitmap("C:\\Users\\Solon\\OneDrive\\Área de Trabalho\\NovaRoma_Icon-removebg-preview AAAA.ico")
+#campos
+
+label_usuario = ctk.CTkLabel(novaroma,text='Usuário')
+label_usuario.pack(pady=10)
+
+campo_usuario = ctk.CTkEntry(novaroma,placeholder_text='Digite seu usuário')
+campo_usuario.pack(pady=10)
+
+label_senha = ctk.CTkLabel(novaroma,text='Digite sua senha')
+label_senha.pack(pady=10)
+
+campo_senha = ctk.CTkEntry(novaroma,placeholder_text='Digite sua senha',
+                           show='*')
+campo_senha.pack(pady=10)
+
+#button
+botao_login = ctk.CTkButton(novaroma,text='Login', command=login_bundy_rh)
+botao_login.pack(pady=10)
+
+#importar planilha
+botao_arquivo = ctk.CTkButton(novaroma, text='Selecionar Planilha', command=escolher_arquivo)
+botao_arquivo.pack_forget()
+
+# campo feedback
+resultado_login = ctk.CTkLabel(novaroma,text='')
+resultado_login.pack(pady=10)
+
+novaroma.mainloop()
